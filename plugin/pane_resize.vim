@@ -530,3 +530,8 @@ silent! delcommand PaneResize
 command! -bar -nargs=0 PaneResize call s:Main()
 
 nnoremap <silent> <Plug>(PaneResize) :PaneResize<CR>
+
+if !empty(g:resize_enter)
+    execute 'nmap <silent>' g:resize_enter '<Plug>(PaneResize)'
+    let g:resize_enter_mapped = g:resize_enter
+endif
