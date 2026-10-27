@@ -9,11 +9,6 @@ function! s:InitPaneResize() abort
 	if exists('g:resize_enter_mapped') && !empty(g:resize_enter_mapped)
 			silent! execute 'nunmap' g:resize_enter_mapped
 	endif
-
-	if !empty(g:resize_enter)
-		execute 'nmap <silent>' g:resize_enter '<Plug>(PaneResize)'
-		let g:resize_enter_mapped = g:resize_enter
-	endif
 endfunction
 
 let s:default_keys = {
