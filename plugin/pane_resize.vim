@@ -442,7 +442,7 @@ function! s:Main() abort
 	let l:cmdheight   	= max([1, &cmdheight])
 	let l:ea          	= &equalalways
 	let l:confirmed 	= 0
-	let l:prompt      	= get(g:, 'resize_prompt', '<-RESIZE-MODE-> : [Enter] : [Esc] ')
+	let l:prompt = get(g:, 'resize_prompt', '<-RESIZE-MODE-> : [Enter/Esc]')
 
 	set nohlsearch
 	set noequalalways
