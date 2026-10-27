@@ -1,15 +1,22 @@
-" pane_resize.vim — modal window resize / move / split
+function! s:InitPaneResize() abort
+	let g:pane_resize   = 1
+	let g:resize_enter  = get(g:, 'resize_enter',  '<Leader>r')
+	let g:resize_width  = get(g:, 'resize_width',  1)
+	let g:resize_height = get(g:, 'resize_height', 1)
+	let g:resize_leave  = get(g:, 'resize_leave',  1)
+	let g:resize_prompt = get(g:, 'resize_prompt', '<-RESIZE-MODE-> : [Enter/Esc]')
 
-if exists('g:resize_enter_mapped') && !empty(g:resize_enter_mapped)
-	silent! execute 'nunmap' g:resize_enter_mapped
-endif
+	call s:BuildKeymap()
+	
+	if exists('g:resize_enter_mapped') && !empty(g:resize_enter_mapped)
+			silent! execute 'nunmap' g:resize_enter_mapped
+	endif
 
-let g:pane_resize   = 1
-let g:resize_enter  = get(g:, 'resize_enter',  '<C-r>')
-let g:resize_width  = get(g:, 'resize_width',  1)
-let g:resize_height = get(g:, 'resize_height', 1)
-let g:resize_leave  = get(g:, 'resize_leave',  1)
-let g:resize_prompt = get(g:, 'resize_prompt', '<-RESIZE-MODE-> : [Enter] : [Esc]')
+	if !empty(g:resize_enter)
+		execute 'nmap <silent>' g:resize_enter '<Plug>(PaneResize)'
+		let g:resize_enter_mapped = g:resize_enter
+	endif
+endfunction
 
 let s:default_keys = {
 	\ 'focus_left'    : 'h',
@@ -30,6 +37,11 @@ let s:default_keys = {
 	\ 'confirm'       : '<CR>',
 	\ 'cancel'        : '<Esc>',
 	\ }
+
+augroup PaneResize
+    autocmd!
+    autocmd VimEnter * call s:InitPaneResize()
+augroup END
 
 " -----------------------------------------------------------------------------
 " Key translation
@@ -517,9 +529,7 @@ function! PaneResize() abort
 endfunction
 
 silent! delcommand PaneResize
-silent! delcommand Resize
 command! -bar -nargs=0 PaneResize call s:Main()
-command! -bar -nargs=0 Resize call s:Main()
 
 nnoremap <silent> <Plug>(PaneResize) :PaneResize<CR>
 
