@@ -1,11 +1,11 @@
-function! s:InitPaneResize() abort
-	let g:pane_resize   = 1
-	let g:resize_enter  = get(g:, 'resize_enter',  '<Leader>r')
-	let g:resize_width  = get(g:, 'resize_width',  1)
-	let g:resize_height = get(g:, 'resize_height', 1)
-	let g:resize_leave  = get(g:, 'resize_leave',  1)
-	let g:resize_prompt = get(g:, 'resize_prompt', '<-RESIZE-MODE-> : [Enter/Esc]')
+let g:pane_resize   = get(g:, 'pane_resize', 1)
+let g:resize_enter  = get(g:, 'resize_enter',  '<Leader>r')
+let g:resize_width  = get(g:, 'resize_width',  1)
+let g:resize_height = get(g:, 'resize_height', 1)
+let g:resize_leave  = get(g:, 'resize_leave',  1)
+let g:resize_prompt = get(g:, 'resize_prompt', '<-RESIZE-MODE-> : [Enter/Esc]')
 
+function! s:InitPaneResize() abort
 	call s:BuildKeymap()
 	
 	if exists('g:resize_enter_mapped') && !empty(g:resize_enter_mapped)
@@ -472,13 +472,13 @@ function! s:Main() abort
 			break
 
 		elseif action ==# 'inc_left'
-			call s:IncResize('h', g:resize_width)
+			call s:IncResize('h', get(g:, 'resize_width', 1))
 		elseif action ==# 'inc_right'
-			call s:IncResize('l', g:resize_width)
+			call s:IncResize('l', get(g:, 'resize_width', 1))
 		elseif action ==# 'inc_down'
-			call s:IncResize('j', g:resize_height)
+			call s:IncResize('j', get(g:, 'resize_height', 1))
 		elseif action ==# 'inc_up'
-			call s:IncResize('k', g:resize_height)
+			call s:IncResize('k', get(g:, 'resize_height', 1))
 
 		elseif action ==# 'conquer_left'
 			call s:Conquer('H')
